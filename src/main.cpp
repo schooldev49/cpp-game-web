@@ -3,18 +3,10 @@
 /*#include "../emsdk/upstream/emscripten/system/include/emscripten.h"*/
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "Engine.h"
-#include "TextureManager.h"
+#include "systemfiles/Engine.h"
+#include "graphics/TextureManager.h"
 
 const unsigned int WIDTH = 800, HEIGHT = 600;
-
-void changeColor(SDL_Renderer *renderer, int r, int g, int b, int a){
-    SDL_SetRenderDrawColor(renderer,r,g,b,a);
-
-    SDL_RenderClear(renderer);
-
-    SDL_RenderPresent(renderer);
-}
 
 int main(int argc, char* argv[]){
     

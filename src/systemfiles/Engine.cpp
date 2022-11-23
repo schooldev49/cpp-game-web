@@ -1,10 +1,15 @@
 #include "Engine.h"
-#include "TextureManager.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include "../graphics/TextureManager.h"
+#include "../player/MainChar.h"
+#include "../physics/Transform.h"
 #include <iostream>
 
 const unsigned int WIDTH = 800, HEIGHT = 600;
 
 Engine* Engine::s_Instance = nullptr;
+MainChar* player = nullptr;
 /*
  bool Init();
         bool Clean();
@@ -26,11 +31,17 @@ bool Engine::Init(){
         return false;
     }
     m_isRunning = true;
-    TextureManager::GetInstance()->Load("rickroll","assets/rickroll.png");
+    TextureManager::GetInstance()->Load("player","assets/rickroll.png");
+    player = new MainChar(new Properties("player",100,200,1000,1000));
     return m_isRunning == true;
 }
 
 bool Engine::Clean(){
+    TextureManager::GetInstance()->Clean();
+    SDL_DestroyRenderer(m_Renderer);
+    SDL_DestroyWindow(m_Window);
+    SDL_Quit();
+    IMG_Quit();
     return true;
 }
 
@@ -39,13 +50,14 @@ void Engine::Quit() {
 }
 
 void Engine::Update() {
-
+    player->Update(0);
 }
 
 void Engine::Render(){
     SDL_SetRenderDrawColor(m_Renderer,124,218,254,255);
     SDL_RenderClear(m_Renderer);
-    TextureManager::GetInstance()->Draw("rickroll",0,0,1400,1400);
+    //TextureManager::GetInstance()->Draw("rickroll",0,0,1400,1400);
+    player->Draw();
     SDL_RenderPresent(m_Renderer);
 
 }

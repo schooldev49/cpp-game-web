@@ -1,5 +1,5 @@
 #include "TextureManager.h"
-#include "Engine.h"
+#include "../systemfiles/Engine.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
@@ -29,6 +29,15 @@ void TextureManager::Draw(std::string id, int x, int y, int width, int height, S
 
 
 }
+
+void TextureManager::DrawFrame(std::string id, int x, int y, int width, int height, int row, int frame, SDL_RendererFlip flip){
+    SDL_Rect srcRect = {width*frame,height*row-1,width,height};
+    SDL_Rect dstRect = {x,y,width,height};
+    SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, 0, nullptr, flip);
+
+
+}
+
 
 void TextureManager::Drop(std::string id){
     SDL_DestroyTexture(m_TextureMap[id]);
