@@ -1,5 +1,7 @@
 #include "TextureManager.h"
 #include "../systemfiles/Engine.h"
+#include "../viewport/Viewport.h"
+#include "../tinyxml/tinyxml.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
@@ -8,7 +10,7 @@ TextureManager* TextureManager::s_Instance = nullptr;
 bool TextureManager::Load(std::string id, std::string filename){
     SDL_Surface* surface = IMG_Load(filename.c_str());
     if (surface == nullptr){
-        std::cout << "Failed to load texture " << filename.c_str() << " \n";
+        std::cout << "Failed to load texture " << filename.c_str() << " \n" << IMG_GetError();
         return false;
     }
     Engine* engine = Engine::GetInstance();
@@ -22,18 +24,28 @@ bool TextureManager::Load(std::string id, std::string filename){
     return true;
 }
 
-void TextureManager::Draw(std::string id, int x, int y, int width, int height, SDL_RendererFlip flip){
+void TextureManager::Draw(std::string id, int x, int y, int width, int height, float scaleX, float scaleY, float scrollRatio, SDL_RendererFlip flip){
     SDL_Rect srcRect = {0,0,width,height};
-    SDL_Rect dstRect = {x,y,width,height};
+    Vector2D cam = Viewport::GetInstance()->GetPosition()*scrollRatio;
+    SDL_Rect dstRect = {x - cam.X,y - cam.Y,width*scaleX,height*scaleY};
     SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, 0, nullptr, flip);
+}
 
+void TextureManager::DrawTile(std::string tid, int tSize, int x, int y, int row, int frame, SDL_RendererFlip flip){
+    SDL_Rect srcRect = {tSize*frame, tSize * row, tSize, tSize};
+    Vector2D cam = Viewport::GetInstance()->GetPosition();
+
+    SDL_Rect dstRect = {x - cam.X,y - cam.Y,tSize, tSize};
+    SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(),m_TextureMap[tid],&srcRect,&dstRect,0,0,flip);
 
 }
 
 void TextureManager::DrawFrame(std::string id, int x, int y, int width, int height, int row, int frame, SDL_RendererFlip flip){
-    SDL_Rect srcRect = {width*frame,height*row-1,width,height};
-    SDL_Rect dstRect = {x,y,width,height};
-    SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, 0, nullptr, flip);
+    SDL_Rect srcRect = {width*frame,height*row,width,height};
+    Vector2D cam = Viewport::GetInstance()->GetPosition();
+
+    SDL_Rect dstRect = {x - cam.X,y - cam.Y,width,height};
+    SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, 0, 0, flip);
 
 
 }
@@ -50,4 +62,26 @@ void TextureManager::Clean(){
         SDL_DestroyTexture(it->second);
     }
     m_TextureMap.clear();
+}
+
+bool TextureManager::ParseTexture(std::string source){
+    TiXmlDocument xml;
+    xml.LoadFile(source);
+
+    if (xml.Error()){
+        std::cout << "Failed to load " << source << "\n" << "reason: " << xml.ErrorDesc() << "\n";
+        return false;
+    }
+
+    TiXmlElement* root = xml.RootElement();
+    for (TiXmlElement* e=root->FirstChildElement(); e!=nullptr; e=e->NextSiblingElement()){
+        if (e->Value() == std::string("texture")){
+            std::string id = e->Attribute("id");
+            std::string src = e->Attribute("source");
+            std::cout << src << " is the source!";
+            Load(id,src);
+        }
+    }
+
+    return true;
 }

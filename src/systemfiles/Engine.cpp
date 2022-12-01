@@ -1,15 +1,20 @@
 #include "Engine.h"
+#include "../input/Input.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "../graphics/TextureManager.h"
 #include "../player/MainChar.h"
 #include "../physics/Transform.h"
+#include "../viewport/Viewport.h"
+#include "../map/MapParser.h"
+#include "../time/Timer.h"
 #include <iostream>
 
-const unsigned int WIDTH = 800, HEIGHT = 600;
+const unsigned int WIDTH = 940, HEIGHT = 640;
 
 Engine* Engine::s_Instance = nullptr;
 MainChar* player = nullptr;
+
 /*
  bool Init();
         bool Clean();
@@ -19,25 +24,39 @@ MainChar* player = nullptr;
         void Events();
 */
 bool Engine::Init(){
-    m_Window = SDL_CreateWindow("Jumpy game",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,WIDTH,HEIGHT,SDL_WINDOW_ALLOW_HIGHDPI);
+    SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI);
+    m_Window = SDL_CreateWindow("Jumpy game",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,WIDTH,HEIGHT,window_flags);
     if (m_Window == nullptr){
         std::cout << "unable to create window. error: " << SDL_GetError() << "\n"; 
         return false;
     }
-
-    m_Renderer = SDL_CreateRenderer(m_Window,-1,SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_RendererFlags renderer_flags = (SDL_RendererFlags)(SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    m_Renderer = SDL_CreateRenderer(m_Window,-1,renderer_flags);
     if (m_Renderer == nullptr){
         std::cout << "unable to create renderer. error: " << SDL_GetError() << "\n";
         return false;
     }
-    m_isRunning = true;
-    TextureManager::GetInstance()->Load("player","assets/rickroll.png");
-    player = new MainChar(new Properties("player",100,200,1000,1000));
+
+    if (!MapParser::GetInstance()->Load()){
+        std::cout << "Unable to load map!";
+    }
+    
+    m_levelMap = MapParser::GetInstance()->GetMaps("level1");
+
+    TextureManager::GetInstance()->ParseTexture("assets/textures.tml");
+    player = new MainChar(new Properties("player",100,200,160,160));
+    m_gameObjects.push_back(player);
+    Viewport::GetInstance()->SetTarget(player->GetOrigin());
     return m_isRunning == true;
 }
 
 bool Engine::Clean(){
+
+    for (unsigned int i=0; i != m_gameObjects.size(); i++){
+        m_gameObjects[i]->Clean();
+    }
     TextureManager::GetInstance()->Clean();
+    MapParser::GetInstance()->Clean();
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_Window);
     SDL_Quit();
@@ -45,31 +64,35 @@ bool Engine::Clean(){
     return true;
 }
 
+
+
 void Engine::Quit() {
     m_isRunning = false;
 }
 
 void Engine::Update() {
-    player->Update(0);
+    float dt = Timer::GetInstance()->getDeltaTime();
+    for (unsigned int i=0; i != m_gameObjects.size(); i++){
+        m_gameObjects[i]->Update(dt);
+    }
+    Viewport::GetInstance()->Update(dt);
+    m_levelMap->Update();
 }
 
 void Engine::Render(){
     SDL_SetRenderDrawColor(m_Renderer,124,218,254,255);
     SDL_RenderClear(m_Renderer);
     //TextureManager::GetInstance()->Draw("rickroll",0,0,1400,1400);
-    player->Draw();
+    TextureManager::GetInstance()->Draw("bg",0,0,2100,1050,1,1,0.05);
+    m_levelMap->Render();
+
+    for (unsigned int i=0; i != m_gameObjects.size(); i++){
+        m_gameObjects[i]->Draw();
+    }
     SDL_RenderPresent(m_Renderer);
 
 }
 
 void Engine::Events(){
-    SDL_Event event;
-    SDL_PollEvent(&event);
-
-    switch(event.type){
-        case SDL_QUIT:
-            Quit();
-            break;
-
-    }
+    Input::GetInstance()->Listen();
 }

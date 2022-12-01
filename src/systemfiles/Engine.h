@@ -2,9 +2,11 @@
 #define ENGINE_H
 
 #include <SDL2/SDL.h>
-
-#define SCREEN_WIDTH 1250
-#define SCREEN_HEIGHT 350
+#include <SDL2/SDL_image.h>
+#include "../player/GameObject.h"
+#include "../map/Map.h"
+#define SCREEN_WIDTH 960
+#define SCREEN_HEIGHT 640
 
 class Engine {
     public: 
@@ -14,22 +16,28 @@ class Engine {
         bool Init();
         bool Clean();
         void Quit();
+
         void Update();
         void Render();
         void Events();
-
         inline bool isRunning() { 
             return m_isRunning;
         };
         inline SDL_Renderer* GetRenderer(){
             return m_Renderer;
         }
+
+        inline Map* GetMap(){
+            return m_levelMap;
+        }
     private:  
         Engine(){}
         bool m_isRunning;
+        Map* m_levelMap;
         SDL_Window* m_Window;
         SDL_Renderer* m_Renderer;
         static Engine* s_Instance; 
+        std::vector<GameObject*> m_gameObjects;
 };
 
 

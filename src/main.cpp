@@ -5,28 +5,27 @@
 #include <SDL2/SDL_image.h>
 #include "systemfiles/Engine.h"
 #include "graphics/TextureManager.h"
-
-const unsigned int WIDTH = 800, HEIGHT = 600;
+#include "time/Timer.h"
 
 int main(int argc, char* argv[]){
     
     
     if (SDL_Init(SDL_INIT_VIDEO) == 0 && IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) != 0){
-        std::cout << "success!";
+        std::cout << "success!\n";
     } else {
         std::cout << "there is an error: " << SDL_GetError() << "\n";
         return EXIT_FAILURE;
     };
 
     static Engine* engine = Engine::GetInstance();
-
+    static Timer* timer = Timer::GetInstance();
     engine->Init();
 
     while (engine->isRunning()){
         engine->Events(); 
         engine->Update();
         engine->Render();
-
+        timer->Tick();
     }
     engine->Clean();
     return 0;
