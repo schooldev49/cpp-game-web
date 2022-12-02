@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstdio>
-/*#include "../emsdk/upstream/emscripten/system/include/emscripten.h"*/
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "systemfiles/Engine.h"

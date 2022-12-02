@@ -22,7 +22,9 @@ MainChar::MainChar(Properties* props): Character(props) {
 }
 
 void MainChar::Draw(){
-    
+    if (!m_Transform->Y || m_Transform->Y >= 5000){ // it's a crash bound to happen sometime - fallback
+        m_Transform->Y = 200; // moves to default pos;
+    }
     if (m_Transform->Y >= 510){
         
         std::cout << "\nYou Lost at " << m_Transform->Y << "!\n";

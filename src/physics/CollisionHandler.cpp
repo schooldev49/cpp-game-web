@@ -20,9 +20,9 @@ bool CollisionHandler::checkCollision(SDL_Rect a, SDL_Rect b){
 }
 
 bool CollisionHandler::MapCollision(SDL_Rect a){
-    int tSize = 32;
-    int rowCount = 20;
-    int colCount = 60;
+    const int tSize = 32;
+    const int rowCount = 20;
+    const int colCount = 60;
 
 
     int leftTile = a.x/tSize;
