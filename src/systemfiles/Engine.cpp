@@ -52,8 +52,8 @@ bool Engine::Init(){
 
 bool Engine::Clean(){
 
-    for (unsigned int i=0; i != m_gameObjects.size(); i++){
-        m_gameObjects[i]->Clean();
+    for (auto i : m_gameObjects){
+        i->Clean();
     }
     TextureManager::GetInstance()->Clean();
     MapParser::GetInstance()->Clean();
@@ -72,8 +72,8 @@ void Engine::Quit() {
 
 void Engine::Update() {
     float dt = Timer::GetInstance()->getDeltaTime();
-    for (unsigned int i=0; i != m_gameObjects.size(); i++){
-        m_gameObjects[i]->Update(dt);
+    for (auto i : m_gameObjects){
+        i->Update(dt);
     }
     Viewport::GetInstance()->Update(dt);
     m_levelMap->Update();
@@ -86,8 +86,8 @@ void Engine::Render(){
     TextureManager::GetInstance()->Draw("bg",0,0,2100,1050,1,1,0.05);
     m_levelMap->Render();
 
-    for (unsigned int i=0; i != m_gameObjects.size(); i++){
-        m_gameObjects[i]->Draw();
+    for (auto i : m_gameObjects){
+        i->Draw();
     }
     SDL_RenderPresent(m_Renderer);
 

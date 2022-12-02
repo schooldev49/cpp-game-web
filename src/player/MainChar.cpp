@@ -9,10 +9,10 @@ MainChar::MainChar(Properties* props): Character(props) {
 
     m_Collider = new Collision();
 
-    m_Collider->SetBuffer(60,30,0,0);
+    m_Collider->SetBuffer(40,45,0,0);
 
     m_RigidBody = new RigidBody();
-    m_RigidBody->setGravity(3.0f);
+    m_RigidBody->setGravity(5.0f);
     m_Animation = new CharAnim();
     
     std::cout << "anima..";
@@ -22,7 +22,7 @@ MainChar::MainChar(Properties* props): Character(props) {
 }
 
 void MainChar::Draw(){
-    m_Animation->Draw(m_Transform->X, m_Transform->Y,m_width,m_height);
+    m_Animation->Draw(m_Transform->X, m_Transform->Y,m_width,m_height,1,1,m_Flip);
 
     m_Collider->Draw();
 }
@@ -43,12 +43,12 @@ void MainChar::Update(float dt){
     if (Input::GetInstance()->getKeyDown(SDL_SCANCODE_SPACE) && m_isGrounded){
         m_isJumping = true;
         m_isGrounded = false;
-        m_RigidBody->applyForceY(-1*m_jumpForce);
+        m_RigidBody->applyForceY(-2*m_jumpForce);
     }
 
     if (Input::GetInstance()->getKeyDown(SDL_SCANCODE_SPACE) && m_isJumping && m_jumpTime > 0){
         m_jumpTime -= dt;
-        m_RigidBody->applyForceY(-1*m_jumpForce);
+        m_RigidBody->applyForceY(-0.5*m_jumpForce);
     } else {
         m_isJumping = false;
         m_jumpTime = 15.0f;
@@ -57,7 +57,7 @@ void MainChar::Update(float dt){
 
     m_lastSafePosition.X = m_Transform->X;
     m_Transform->X += m_RigidBody->Position().X;
-    m_Collider->Set(m_Transform->X, m_Transform->Y, 96,96);
+    m_Collider->Set(m_Transform->X, m_Transform->Y, 40,78);
 
     if (CollisionHandler::GetInstance()->MapCollision(m_Collider->Get())){
         m_Transform->X = m_lastSafePosition.X;
@@ -66,8 +66,7 @@ void MainChar::Update(float dt){
     m_RigidBody->Update(dt);
     m_lastSafePosition.Y = m_Transform->Y;
     m_Transform->Y += m_RigidBody->Position().Y;
-    m_Collider->Set(m_Transform->X,m_Transform->Y,96,96);
-
+    m_Collider->Set(m_Transform->X,m_Transform->Y,40,78);
 
     if (CollisionHandler::GetInstance()->MapCollision(m_Collider->Get())){
         m_isGrounded = true;

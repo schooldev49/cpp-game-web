@@ -3,8 +3,14 @@
 CollisionHandler* CollisionHandler::s_Instance = nullptr;
 
 CollisionHandler::CollisionHandler(){
-    m_CollisionLayer = (MapChunk*)Engine::GetInstance()->GetMap()->GetMapChunks().front();
+    std::cout << "wow\n";
+    m_CollisionLayer = (MapChunk*)Engine::GetInstance()->GetMap()->GetMapChunks().back();
     m_colTileMap = m_CollisionLayer->GetTileMap();
+    for (int i=0; i<m_colTileMap.size(); i++){
+        for (int j=0; j<m_colTileMap.size(); j++){
+            std::cout << m_colTileMap[j][i];
+        }
+    }
 }
 
 bool CollisionHandler::checkCollision(SDL_Rect a, SDL_Rect b){

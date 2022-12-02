@@ -41,7 +41,7 @@ void TextureManager::DrawTile(std::string tid, int tSize, int x, int y, int row,
 }
 
 void TextureManager::DrawFrame(std::string id, int x, int y, int width, int height, int row, int frame, SDL_RendererFlip flip){
-    SDL_Rect srcRect = {width*frame,height*row,width,height};
+    SDL_Rect srcRect = {width*frame, 0 ,width,height};
     Vector2D cam = Viewport::GetInstance()->GetPosition();
 
     SDL_Rect dstRect = {x - cam.X,y - cam.Y,width,height};
