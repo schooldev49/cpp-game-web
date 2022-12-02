@@ -20,12 +20,13 @@ int main(int argc, char* argv[]){
     static Engine* engine = Engine::GetInstance();
     static Timer* timer = Timer::GetInstance();
     engine->Init();
-
+    SDL_Delay(0);
     while (engine->isRunning()){
         engine->Events(); 
         engine->Update();
         engine->Render();
         timer->Tick();
+        SDL_Delay(0);
     }
     engine->Clean();
     return 0;

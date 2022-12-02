@@ -5,6 +5,7 @@
 #include <SDL2/SDL_image.h>
 #include "../player/GameObject.h"
 #include "../map/Map.h"
+#include "GameState.h"
 #define SCREEN_WIDTH 960
 #define SCREEN_HEIGHT 640
 
@@ -17,6 +18,9 @@ class Engine {
         bool Clean();
         void Quit();
 
+        void popState();
+        void pushState(GameState* current);
+        void changeState(GameState* target);
         void Update();
         void Render();
         void Events();
@@ -30,14 +34,19 @@ class Engine {
         inline Map* GetMap(){
             return m_levelMap;
         }
-    private:  
+        Map* m_levelMap;
+
+        void setRunning(bool run){
+            m_isRunning = run;
+        }
+    protected:  
         Engine(){}
         bool m_isRunning;
-        Map* m_levelMap;
         SDL_Window* m_Window;
         SDL_Renderer* m_Renderer;
         static Engine* s_Instance; 
         std::vector<GameObject*> m_gameObjects;
+        std::vector<GameState*> m_States;
 };
 
 

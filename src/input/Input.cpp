@@ -28,6 +28,8 @@ void Input::Listen(){
                 keyUp();
                 break;
         }
+        SDL_Delay(0);
+
     }
 }
 

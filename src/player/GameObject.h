@@ -20,7 +20,7 @@ struct Properties {
 
         }
         int Width, Height;
-        float X, Y;
+        float X, Y = 0;
         std::string TextureID;
         SDL_RendererFlip Flip;
 };

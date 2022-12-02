@@ -5,7 +5,7 @@
 
 class Point {
     public: 
-        float X, Y;
+        float X, Y = 0;
         Point(float x=0, float y=0) : X(x), Y(y) {};
 
         inline Point operator+(const Point& p2) const {

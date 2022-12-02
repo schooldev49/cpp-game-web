@@ -74,7 +74,7 @@ void Engine::Update() {
     float dt = Timer::GetInstance()->getDeltaTime();
     for (auto i : m_gameObjects){
         i->Update(dt);
-    }
+    }   
     Viewport::GetInstance()->Update(dt);
     m_levelMap->Update();
 }
@@ -95,4 +95,5 @@ void Engine::Render(){
 
 void Engine::Events(){
     Input::GetInstance()->Listen();
+
 }

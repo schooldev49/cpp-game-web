@@ -7,8 +7,8 @@
 #include <iostream>
 MapParser* MapParser::s_Instance = nullptr;
 
-bool MapParser::Load(){
-    if (!Parse("level1","assets/maps/level1.tmx")){
+bool MapParser::Load(std::string id, std::string source){
+    if (!Parse(id,source)){
         std::cout << "Nope!\n";
         return false;
     }

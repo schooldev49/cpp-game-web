@@ -29,7 +29,9 @@ void TextureManager::Draw(std::string id, int x, int y, int width, int height, f
     Vector2D cam = Viewport::GetInstance()->GetPosition()*scrollRatio;
     SDL_Rect dstRect = {x - cam.X,y - cam.Y,width*scaleX,height*scaleY};
     SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, 0, nullptr, flip);
+    
 }
+
 
 void TextureManager::DrawTile(std::string tid, int tSize, int x, int y, int row, int frame, SDL_RendererFlip flip){
     SDL_Rect srcRect = {tSize*frame, tSize * row, tSize, tSize};

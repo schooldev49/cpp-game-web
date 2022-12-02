@@ -11,7 +11,7 @@
 
 class MapParser {
     public:
-        bool Load();
+        bool Load(std::string id="level1", std::string source = "assets/maps/level1.tmx");
         void Clean();
         inline Map* GetMaps(std::string id){
             return m_mapDict[id];
