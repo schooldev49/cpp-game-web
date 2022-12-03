@@ -17,8 +17,8 @@ void MapChunk::Update(){
 }
 
 void MapChunk::Render(){
-    for (uint i=0; i <= m_rowCount; i++){
-        for (uint j=0; j <= m_ColCount; j++){
+    for (uint i=0; i < m_rowCount; i++){
+        for (uint j=0; j < m_ColCount; j++){
             int tileID = m_Tilemap[i][j];
             int temp = tileID;
             if (tileID == 0){
