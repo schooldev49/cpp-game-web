@@ -93,6 +93,7 @@
         "__tuple": "cpp",
         "__verbose_abort": "cpp",
         "coroutine": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "deque": "cpp"
     }
 }

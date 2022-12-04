@@ -13,21 +13,22 @@
 #include "../map/MapChunk.h"
 #include "../physics/CollisionHandler.h"
 #include "../graphics/TextureManager.h"
-
+#include "../systemfiles/ObjectR.h"
 class Play : public GameState {
     public:
-        Play();
+        Play(){};
         void Events();
-        virtual bool Init();
+        virtual bool Init(std::string mapName = "level1");
         virtual bool Exit();
+        virtual void Update();
         virtual void Render();
-        inline Map* GetMap(){
-            return m_LevelMap;
+        static Play* GetInstance(){
+            return s_Instance = (s_Instance != nullptr) ? s_Instance : new Play();
         }
-    protected:
         static void OpenMenu();
         static void PauseGame();
         bool levelSelector;
+        static Play* s_Instance;
         Map* m_LevelMap;
         std::vector<GameObject*> m_gameObjects;
 

@@ -1,15 +1,18 @@
 #include "MainChar.h"
 #include <stdlib.h>
 #include <SDL2/SDL.h>
-
 #include <iostream>
+#include "../systemfiles/ObjectR.h"
+
+static Registrar<MainChar> registrar("PLAYER");
+
 MainChar::MainChar(Properties* props): Character(props) {
     m_jumpTime = 15.0f;
     m_jumpForce = 15.0f;
 
     m_Collider = new Collision();
 
-    m_Collider->SetBuffer(40,45,0,0);
+    m_Collider->SetBuffer(50,45,0,0);
 
     m_RigidBody = new RigidBody();
     m_RigidBody->setGravity(3.25f);
@@ -22,15 +25,20 @@ MainChar::MainChar(Properties* props): Character(props) {
 }
 
 void MainChar::Draw(){
-    if (!m_Transform->Y || m_Transform->Y >= 5000){ // it's a crash bound to happen sometime - fallback
+    if (!m_Transform->Y || m_Transform->Y >= 560){ // it's a crash bound to happen sometime - fallback
         m_Transform->Y = 200; // moves to default pos;
+    }
+    if (m_Transform->X >= 1810){
+        std::cout << "\nyou won!\n";
+        Engine::GetInstance()->setRunning(false);
+        return;
     }
     if (m_Transform->Y >= 510){
         
         std::cout << "\nYou Lost at " << m_Transform->Y << "!\n";
         Engine::GetInstance()->setRunning(false);
         return;
-    } else { 
+    } else {    
         m_Animation->Draw(m_Transform->X, m_Transform->Y,m_width,m_height,1,1,m_Flip);
 
         m_Collider->Draw();
@@ -38,7 +46,6 @@ void MainChar::Draw(){
 }
 
 void MainChar::Update(float dt){
-    
     m_Animation->SetProps("player",1,7,100);
     m_RigidBody->UnSetForce();
     if (Input::GetInstance()->getKeyDown(SDL_SCANCODE_A)){
@@ -67,7 +74,7 @@ void MainChar::Update(float dt){
 
     m_lastSafePosition.X = m_Transform->X;
     m_Transform->X += m_RigidBody->Position().X;
-    m_Collider->Set(m_Transform->X, m_Transform->Y, 40,78);
+    m_Collider->Set(m_Transform->X, m_Transform->Y, 23,78);
 
     if (CollisionHandler::GetInstance()->MapCollision(m_Collider->Get())){
         m_Transform->X = m_lastSafePosition.X;
@@ -76,7 +83,7 @@ void MainChar::Update(float dt){
     m_RigidBody->Update(dt);
     m_lastSafePosition.Y = m_Transform->Y;
     m_Transform->Y += m_RigidBody->Position().Y;
-    m_Collider->Set(m_Transform->X,m_Transform->Y,40,78);
+    m_Collider->Set(m_Transform->X,m_Transform->Y,23,78);
 
     if (CollisionHandler::GetInstance()->MapCollision(m_Collider->Get())){
         m_isGrounded = true;

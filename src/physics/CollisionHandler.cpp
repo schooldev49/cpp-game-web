@@ -1,11 +1,22 @@
 #include "CollisionHandler.h"
+#include "../systemfiles/Play.h"
 #include <iostream>
 CollisionHandler* CollisionHandler::s_Instance = nullptr;
 
-CollisionHandler::CollisionHandler(){
-    std::cout << "wow\n";
-    m_CollisionLayer = (MapChunk*)Engine::GetInstance()->GetMap()->GetMapChunks().back();
+CollisionHandler::CollisionHandler(){};
+
+void CollisionHandler::SetCollisionMap(TileMap map, int tSize){
+    m_CollisionLayer = (MapChunk*)Play::GetInstance()->m_LevelMap->GetMapChunks().back();
+    std::cout << "got here\n";
     m_colTileMap = m_CollisionLayer->GetTileMap();
+        std::cout << "got here2";
+
+    m_tilesize = tSize;
+            std::cout << "got her3e2";
+
+    m_mapHeight = m_colTileMap.size();
+    m_mapWidth = m_colTileMap[0].size();
+    
     for (int i=0; i<m_colTileMap.size(); i++){
         for (int j=0; j<m_colTileMap.size(); j++){
             std::cout << m_colTileMap[j][i];
@@ -23,7 +34,6 @@ bool CollisionHandler::MapCollision(SDL_Rect a){
     const int tSize = 32;
     const int rowCount = 20;
     const int colCount = 60;
-
 
     int leftTile = a.x/tSize;
     int rightTile = (a.x + a.w)/tSize;

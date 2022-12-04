@@ -4,7 +4,7 @@
 #include <iostream>
 Menu::Menu(){}
 
-bool Menu::Init(){
+bool Menu::Init(std::string level){
     m_Ctxt = Engine::GetInstance()->GetRenderer();
     if (SDL_GetError()){
         std::cout << "Error! " << SDL_GetError() << "\n";

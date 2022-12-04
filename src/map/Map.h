@@ -2,7 +2,7 @@
 
 #ifndef MAP_H
 #define MAP_H
-
+#include <iostream>
 #include <vector>
 #include "Layer.h"
 #include "MapChunk.h"
@@ -22,6 +22,7 @@ class Map : public Layer {
         }
 
         std::vector<MapChunk*> GetMapChunks(){
+            std::cout << "Getting map chunk";
             return m_MapChunks;
         }
         std::vector<MapChunk*> m_MapChunks;

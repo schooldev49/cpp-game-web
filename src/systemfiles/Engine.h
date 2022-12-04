@@ -18,9 +18,15 @@ class Engine {
         bool Clean();
         void Quit();
 
-        void popState();
-        void pushState(GameState* current);
-        void changeState(GameState* target);
+        void popState(){
+            m_States.erase(m_States.end());
+        };
+        void pushState(GameState* current){
+            m_States.push_back(current);
+        };
+        void changeState(GameState* target){
+            currState = target;
+        };
         void Update();
         void Render();
         void Events();
@@ -31,10 +37,7 @@ class Engine {
             return m_Renderer;
         }
 
-        inline Map* GetMap(){
-            return m_levelMap;
-        }
-        Map* m_levelMap;
+
 
         void setRunning(bool run){
             m_isRunning = run;
@@ -45,8 +48,8 @@ class Engine {
         SDL_Window* m_Window;
         SDL_Renderer* m_Renderer;
         static Engine* s_Instance; 
-        std::vector<GameObject*> m_gameObjects;
         std::vector<GameState*> m_States;
+        GameState* currState;
 };
 
 

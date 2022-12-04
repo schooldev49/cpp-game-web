@@ -13,12 +13,12 @@ void Viewport::Update(float dt){
             m_viewBox.y = 0;
         }
 
-        if (m_viewBox.x > (2*SCREEN_WIDTH - m_viewBox.w)){
-            m_viewBox.x = (2*SCREEN_WIDTH - m_viewBox.w);
+        if (m_viewBox.x > (m_SceneWidth - m_viewBox.w)){
+            m_viewBox.x = (m_SceneWidth- m_viewBox.w);
         }
 
-        if (m_viewBox.y > (2*SCREEN_HEIGHT - m_viewBox.h)){
-            m_viewBox.y = (2*SCREEN_HEIGHT - m_viewBox.h);
+        if (m_viewBox.y > (m_SceneHeight - m_viewBox.h)){
+            m_viewBox.y = (m_SceneHeight - m_viewBox.h);
         }
 
         m_Position = Vector2D(m_viewBox.x,m_viewBox.y);

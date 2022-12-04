@@ -30,7 +30,12 @@ class MapChunk : Layer {
         int getColCount(){
             return m_ColCount;
         }
-
+        int GetWidth(){
+            return m_Tilemap[0].size();
+        }
+        int GetHeight(){
+            return m_Tilemap.size();
+        }
     private:
         int m_tileSize;
         int m_rowCount;

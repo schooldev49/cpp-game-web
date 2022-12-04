@@ -4,16 +4,18 @@
 #include <SDL2/SDL_image.h>
 #include "../graphics/TextureManager.h"
 #include "../player/MainChar.h"
+#include "../systemfiles/ObjectR.h"
 #include "../physics/Transform.h"
 #include "../viewport/Viewport.h"
 #include "../map/MapParser.h"
 #include "../time/Timer.h"
+#include "Play.h"
 #include <iostream>
 
 const unsigned int WIDTH = 940, HEIGHT = 640;
 
 Engine* Engine::s_Instance = nullptr;
-MainChar* player = nullptr;
+Play* play = nullptr;
 
 /*
  bool Init();
@@ -40,22 +42,27 @@ bool Engine::Init(){
     if (!MapParser::GetInstance()->Load()){
         std::cout << "Unable to load map!";
     }
-    
-    m_levelMap = MapParser::GetInstance()->GetMaps("level1");
+    std::cout << "Initializing..\n";
+    play = Play::GetInstance();
+    std::cout << "Got instance!..\n";
 
+    play->Init();
+    std::cout << "Got instancedd!..\n";
+
+    /*m_levelMap = MapParser::GetInstance()->GetMaps("level1");
+    MapChunk* cL = (MapChunk*)m_levelMap->GetMapChunks().back();
+    CollisionHandler::GetInstance()->SetCollisionMap(cL->GetTileMap(),32);
     TextureManager::GetInstance()->ParseTexture("assets/textures.tml");
-    player = new MainChar(new Properties("player",100,200,160,160));
+    Properties* propChar = new Properties("player",100,200,160,160);
+    player = ObjectR::GetInstance()->CreateObject("PLAYER",propChar);
     m_gameObjects.push_back(player);
-    Viewport::GetInstance()->SetTarget(player->GetOrigin());
+    Viewport::GetInstance()->SetTarget(player->GetOrigin());*/
     return m_isRunning == true;
 }
 
 bool Engine::Clean(){
 
-    for (auto i : m_gameObjects){
-        i->Clean();
-    }
-    TextureManager::GetInstance()->Clean();
+    play->Exit();
     MapParser::GetInstance()->Clean();
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_Window);
@@ -71,25 +78,11 @@ void Engine::Quit() {
 }
 
 void Engine::Update() {
-    float dt = Timer::GetInstance()->getDeltaTime();
-    for (auto i : m_gameObjects){
-        i->Update(dt);
-    }   
-    Viewport::GetInstance()->Update(dt);
-    m_levelMap->Update();
+    play->Update();
 }
 
 void Engine::Render(){
-    SDL_SetRenderDrawColor(m_Renderer,124,218,254,255);
-    SDL_RenderClear(m_Renderer);
-    //TextureManager::GetInstance()->Draw("rickroll",0,0,1400,1400);
-    TextureManager::GetInstance()->Draw("bg",0,0,2100,1050,1,1,0.05);
-    m_levelMap->Render();
-
-    for (auto i : m_gameObjects){
-        i->Draw();
-    }
-    SDL_RenderPresent(m_Renderer);
+    play->Render();
 
 }
 

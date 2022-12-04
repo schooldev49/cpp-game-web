@@ -7,7 +7,7 @@
 class Menu : public GameState {
     public:
         Menu();
-        virtual bool Init();
+        virtual bool Init(std::string level = "level1");
         virtual bool Exit();
         virtual void Update();
         virtual void Render();

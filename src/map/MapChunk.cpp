@@ -30,10 +30,8 @@ void MapChunk::Render(){
                 if (m_tileSets.size() > 1){
 
                     for (uint k=1; k < m_tileSets.size(); k++){
-                        std::cout << m_tileSets[k].First << " is also the same " << m_tileSets[k].LastID << "\n";
                         if (tileID >= m_tileSets[k].First && tileID <= m_tileSets[k].LastID){
                             tileID = tileID + m_tileSets[k].tileCount - m_tileSets[k].LastID;
-                            std::cout << "found index at " << k << "\n";
                             index = k;
                             break;
                         }

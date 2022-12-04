@@ -31,6 +31,18 @@ class Viewport {
             m_Target = target;
         }
 
+        inline int GetSceneWidth(){
+            return m_SceneWidth;
+        }
+
+        inline int GetSceneHeight(){
+            return m_SceneHeight;
+        }
+
+        inline void SetSceneLimit(int w, int h){
+            m_SceneWidth = w;
+            m_SceneHeight = h;
+        }
     private:
         Viewport(){
             m_viewBox = {0,0,SCREEN_WIDTH,SCREEN_HEIGHT};
@@ -39,7 +51,7 @@ class Viewport {
         Vector2D m_Position;
 
         SDL_Rect m_viewBox;
-
+        int m_SceneWidth, m_SceneHeight = 0;
         static Viewport* s_Instance;
 };
 
