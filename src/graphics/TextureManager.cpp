@@ -2,8 +2,7 @@
 #include "../systemfiles/Engine.h"
 #include "../viewport/Viewport.h"
 #include "../tinyxml/tinyxml.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 TextureManager* TextureManager::s_Instance = nullptr;
 
@@ -24,6 +23,19 @@ bool TextureManager::Load(std::string id, std::string filename){
     return true;
 }
 
+void TextureManager::AddFont(std::string id, std::string path, int fontSize){
+    m_FontMap.emplace(id, TTF_OpenFont(path.c_str(),fontSize));
+}
+
+TTF_Font* TextureManager::GetFont(std::string id){
+   
+    return m_FontMap[id];
+    
+}
+
+void TextureManager::QueryTexture(std::string id, int* out_w, int* out_h){
+    SDL_QueryTexture(m_TextureMap[id],NULL,NULL, out_w, out_h);
+}
 void TextureManager::Draw(std::string id, int x, int y, int width, int height, float scaleX, float scaleY, float scrollRatio, SDL_RendererFlip flip){
     SDL_Rect srcRect = {0,0,width,height};
     Vector2D cam = Viewport::GetInstance()->GetPosition()*scrollRatio;

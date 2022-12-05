@@ -20,7 +20,16 @@ class Map : public Layer {
                 m_MapChunks[i]->Render();
             }
         }
+        void Clean(){
+            for (auto i : m_MapChunks){
+                i->Clean();
+                delete i;
+            }
 
+            m_MapChunks.clear();
+            m_MapChunks.shrink_to_fit();
+
+        }
         std::vector<MapChunk*> GetMapChunks(){
             std::cout << "Getting map chunk";
             return m_MapChunks;

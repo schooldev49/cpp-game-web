@@ -36,6 +36,11 @@ class MapChunk : Layer {
         int GetHeight(){
             return m_Tilemap.size();
         }
+
+       void Clean(){
+            m_Tilemap.clear();
+            m_tileSets.clear();
+       }
     private:
         int m_tileSize;
         int m_rowCount;

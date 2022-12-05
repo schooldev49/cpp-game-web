@@ -15,6 +15,18 @@ bool Input::getKeyDown(SDL_Scancode key){
     return false;
 }
 
+void Input::mouseDown(SDL_MouseButtonEvent& b){
+    if (b.button == SDL_BUTTON_LEFT){
+        isMouseDown = true;
+    }
+}
+
+void Input::mouseUp(SDL_MouseButtonEvent& b){
+    if (b.button == SDL_BUTTON_LEFT){
+        isMouseDown = false;
+    }
+}
+
 void Input::Listen(){
     SDL_Event event;
     while (SDL_PollEvent(&event)){
@@ -26,6 +38,12 @@ void Input::Listen(){
                 break;
             case SDL_KEYUP: 
                 keyUp();
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                mouseDown(event.button);
+                break;
+            case SDL_MOUSEBUTTONUP:
+                mouseUp(event.button);
                 break;
         }
         SDL_Delay(0);
