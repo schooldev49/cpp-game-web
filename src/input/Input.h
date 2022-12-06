@@ -23,7 +23,7 @@ class Input {
     private:
         Input();
         const Uint8* m_KeyStates; 
-        bool isMouseDown;
+        bool isMouseDown = false;
         static Input* s_Instance;
 };
 

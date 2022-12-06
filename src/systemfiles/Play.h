@@ -30,6 +30,9 @@ class Play : public GameState {
         static Play* GetInstance(){
             return s_Instance = (s_Instance != nullptr) ? s_Instance : new Play();
         }
+        void setMapName(std::string mN){
+            mapName = mN;
+        }
         bool levelSelector;
         static Play* s_Instance;
         std::vector<GameObject*> m_guiObjects;
