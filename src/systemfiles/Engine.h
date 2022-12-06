@@ -27,6 +27,10 @@ class Engine {
         void changeState(GameState* target){
             currState = target;
         };
+
+        GameState* getState(){
+            return currState;
+        }
         void Update();
         void Render();
         void Events();

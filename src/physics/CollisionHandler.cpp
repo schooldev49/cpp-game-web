@@ -6,7 +6,7 @@ CollisionHandler* CollisionHandler::s_Instance = nullptr;
 CollisionHandler::CollisionHandler(){};
 
 void CollisionHandler::SetCollisionMap(TileMap map, int tSize){
-    m_CollisionLayer = (MapChunk*)Play::GetInstance()->m_LevelMap->GetMapChunks().back();
+    m_CollisionLayer = (MapChunk*)Level::GetInstance()->m_LevelMap->GetMapChunks().back();
     std::cout << "got here\n";
     m_colTileMap = m_CollisionLayer->GetTileMap();
         std::cout << "got here2";
@@ -33,7 +33,7 @@ bool CollisionHandler::checkCollision(SDL_Rect a, SDL_Rect b){
 bool CollisionHandler::MapCollision(SDL_Rect a){
     const int tSize = 32;
     const int rowCount = 20;
-    const int colCount = 60;
+    const int colCount = 100;
 
     int leftTile = a.x/tSize;
     int rightTile = (a.x + a.w)/tSize;

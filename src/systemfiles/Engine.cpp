@@ -17,7 +17,6 @@ const unsigned int WIDTH = 940, HEIGHT = 640;
 
 Engine* Engine::s_Instance = nullptr;
 Play* play = nullptr;
-
 /*
  bool Init();
         bool Clean();
@@ -49,6 +48,7 @@ bool Engine::Init(){
     play = Play::GetInstance();
     std::cout << "Got instance!..\n";
     TextureManager::GetInstance()->AddFont("Comic Sans MS","assets/fonts/comic.ttf",16);
+    changeState(Menu::GetInstance());
     play->Init();
     std::cout << "Got instancedd!..\n";
 
@@ -82,7 +82,8 @@ void Engine::Quit() {
 }
 
 void Engine::Update() {
-    play->Update();
+    float dt = Timer::GetInstance()->getDeltaTime();
+    play->Update(dt);
 }
 
 void Engine::Render(){

@@ -3,7 +3,6 @@
 
     <texture id="bg" source="assets/background3.png"/>
     <texture id="player" source="assets/char.png"/>
-    <texture id="settings" source="assets/settings.png"/>
-    <texture id="play" source="assets/play.png"/>
-    <texture id="selectlevel" source="assets/selectlevel.png"/>
+    <texture id="button" source="assets/button.png"/>
+    <texture id="buttonhover" source="assets/buttont.png"/>
 </textures>

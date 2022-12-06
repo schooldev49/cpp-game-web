@@ -51,7 +51,7 @@ class Button : public GameObject {
 
         virtual void Update(float dt) override {
             int x, y = 0;
-            SDL_GetGlobalMouseState(&x,&y);
+            SDL_GetMouseState(&x,&y);
             SDL_Point point = {x, y};
 
             if (SDL_PointInRect(&point,&m_Shape)){

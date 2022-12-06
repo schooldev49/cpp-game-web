@@ -12,12 +12,20 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "#key": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "#tileset": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
         "level1.tmx": {
             "scale": 0.75,
-            "selectedLayer": 0,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 1896,
-                "y": 320
+                "x": 2736,
+                "y": 317.33333333333326
             }
         },
         "level1.tmx#Tileset": {
@@ -34,6 +42,9 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "level1.tmx#tileset": {
+            "scaleInDock": 1
+        },
         "level1.tmx#ts": {
             "dynamicWrapping": true,
             "scaleInDock": 1
@@ -41,7 +52,7 @@
     },
     "last.imagePath": "C:/Users/yxiao/codeday2022game/assets/maps",
     "map.lastUsedFormat": "tmx",
-    "map.width": 60,
+    "map.width": 100,
     "openFiles": [
         "level1.tmx"
     ],

@@ -94,6 +94,13 @@
         "__verbose_abort": "cpp",
         "coroutine": "cpp",
         "string_view": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "cfenv": "cpp",
+        "complex": "cpp",
+        "numeric": "cpp",
+        "queue": "cpp",
+        "random": "cpp",
+        "set": "cpp",
+        "unordered_set": "cpp"
     }
 }

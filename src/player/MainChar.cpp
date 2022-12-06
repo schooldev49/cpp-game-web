@@ -28,15 +28,18 @@ void MainChar::Draw(){
     if (!m_Transform->Y || m_Transform->Y >= 560){ // it's a crash bound to happen sometime - fallback
         m_Transform->Y = 200; // moves to default pos;
     }
-    if (m_Transform->X >= 1810){
-        std::cout << "\nyou won!\n";
-        Engine::GetInstance()->setRunning(false);
-        return;
+    if (m_Transform->X >= 3091){
+       std::cout << "You won!";
+       // TODO: load map.
+       m_Transform->X = 100;
+       m_Transform->Y = 200;
+       return;
     }
     if (m_Transform->Y >= 510){
         
         std::cout << "\nYou Lost at " << m_Transform->Y << "!\n";
-        Engine::GetInstance()->setRunning(false);
+        m_Transform->X = 100;
+        m_Transform->Y = 200;
         return;
     } else {    
         m_Animation->Draw(m_Transform->X, m_Transform->Y,m_width,m_height,1,1,m_Flip);
