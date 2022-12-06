@@ -39,7 +39,6 @@ void TextureManager::QueryTexture(std::string id, int* out_w, int* out_h){
 void TextureManager::Draw(std::string id, int x, int y, int width, int height, float scaleX, float scaleY, float scrollRatio, SDL_RendererFlip flip){
     SDL_Rect srcRect = {0,0,width,height};
     Vector2D cam = Viewport::GetInstance()->GetPosition()*scrollRatio;
-
     SDL_Rect dstRect = {x - cam.X,y - cam.Y,width*scaleX,height*scaleY};
     
     SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, 0, nullptr, flip);

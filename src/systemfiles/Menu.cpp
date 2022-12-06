@@ -13,7 +13,7 @@ bool Menu::Init(std::string level){
     Button* menuButton = new Button(10,10,138,57,startGame,{"button","buttonhover","button"});
     SDL_Color white = {12,225,12,204};
     Label* menuLabel = new Label(20,25,118,32, "Play","Comic Sans MS",white);
-    Button* settingsButton = new Button(10,90,89,32,Level::GetInstance()->OpenMenu,{"button","buttonhover","button"});
+  //  Button* settingsButton = new Button(10,90,89,32,Level::GetInstance()->OpenMenu,{"button","buttonhover","button"});
     m_guiObjects.push_back(menuButton);
     m_guiObjects.push_back(menuLabel);
     return true;

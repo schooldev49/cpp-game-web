@@ -28,7 +28,7 @@ class Button : public GameObject {
             m_Transform->Y = y;
             m_Callback = callback;
             m_TextrIds = txtrIds; 
-            TextureManager::GetInstance()->QueryTexture(m_TextureID, &m_width, &m_height);
+            TextureManager::GetInstance()->QueryTexture(tID, &m_width, &m_height);
             m_Shape = {(int)m_Transform->X, (int)m_Transform->Y, m_width,m_height};
         }
 
@@ -38,7 +38,7 @@ class Button : public GameObject {
         }
         virtual void Draw() override{
             //     TextureManager::GetInstance()->Draw("bg",0,0,2100,1050,1,1,0.05);
-            TextureManager::GetInstance()->Draw(m_TextureID, m_Transform->X, m_Transform->Y, m_width, m_height);
+            TextureManager::GetInstance()->Draw(tID, m_Transform->X, m_Transform->Y, m_width, m_height);
         }
         virtual void Clean() override {
             for (auto id : m_TextrIds){
@@ -58,19 +58,20 @@ class Button : public GameObject {
                 if (Input::GetInstance()->isDown() && m_isReleased){
                     m_Callback();
                     m_isReleased = false;
-                    m_TextureID = m_TextrIds[PRESSED];
+                    tID = m_TextrIds[PRESSED];
                 } else if (!Input::GetInstance()->isDown()){
                     m_isReleased = true;
-                    m_TextureID = m_TextrIds[HOVER];
+                    tID = m_TextrIds[HOVER];
                 } 
             } else {
-                m_TextureID = m_TextrIds[NORMAL];
+                tID = m_TextrIds[NORMAL];
             }
         } 
         SDL_Rect m_Shape;
         bool m_isReleased;
         void (*m_Callback)();
         TextureIdList m_TextrIds;
+        std::string tID;
 };
 
 #endif

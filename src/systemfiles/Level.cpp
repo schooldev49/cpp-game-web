@@ -6,7 +6,6 @@ bool Level::Init(std::string mapN){
     std::string mapName = Play::GetInstance()->mapName;
     
 
-    TextureManager::GetInstance()->ParseTexture("assets/textures.tml");
     
     if (!MapParser::GetInstance()->Load(mapName)){
         std::cout << "Unable to load map!";
