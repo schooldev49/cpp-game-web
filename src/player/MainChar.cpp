@@ -31,6 +31,9 @@ void MainChar::Draw(){
     if (m_Transform->X >= 3091){
        std::cout << "You won!";
        // TODO: load map.
+       std::string newName = Level::GetInstance()->AddLevelStr(true);
+       Play::GetInstance()->setMapName(newName);
+       Level::GetInstance()->ChangeMap();
        m_Transform->X = 100;
        m_Transform->Y = 200;
        return;
@@ -105,5 +108,4 @@ void MainChar::Update(float dt){
 }
 
 void MainChar::Clean(){
-    TextureManager::GetInstance()->Drop(m_TextureID);
 }

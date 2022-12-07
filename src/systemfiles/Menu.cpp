@@ -42,7 +42,7 @@ void Menu::Update(float dt){
 void Menu::startGame(){
     // TODO: Open level selector!
     // After opening... return level.
-    std::string level = "level1";
+    std::string level = Play::GetInstance()->mapName;
     Engine::GetInstance()->changeState(Level::GetInstance());
     Level::GetInstance()->Init(level);
 }

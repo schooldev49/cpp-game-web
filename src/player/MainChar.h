@@ -10,8 +10,11 @@
 #include "../physics/Transform.h"
 #include "../physics/CollisionHandler.h"
 #include "../viewport/Viewport.h"
+#include "../systemfiles/Engine.h"
 #include "../player/CharAnim.h"
 #include "../physics/Collision.h"
+#include "../systemfiles/Level.h"
+#include "../systemfiles/Play.h"
 #include "../input/Input.h"
 class MainChar : public Character {
 

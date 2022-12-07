@@ -5,6 +5,7 @@
 
 #include "GameState.h"
 #include "Play.h"
+
 class Level : public GameState {
     public:
         Level(){};
@@ -16,31 +17,14 @@ class Level : public GameState {
         static Level* GetInstance(){
             return s_Instance = (s_Instance != nullptr) ? s_Instance : new Level();
         }
-        void ChangeMap(std::string mapID){
-            if (mapID != ""){
-                m_LevelMap->Clean();
-                if (!MapParser::GetInstance()->Load(mapID)){
-                    std::cout << "Unable to load map!";
-                }
-                m_LevelMap = MapParser::GetInstance()->GetMaps(mapID);
-                MapChunk* collisionLayer = (MapChunk*)m_LevelMap->GetMapChunks().back();
-                CollisionHandler::GetInstance()->SetCollisionMap(collisionLayer->GetTileMap(),32);
-
-                int tSize = 32;
-                int width = collisionLayer->GetWidth()*tSize;
-                int height = collisionLayer->GetHeight()*tSize;
-
-                Viewport::GetInstance()->SetSceneLimit(width,height);
-              
-                return;
-            }
-        }
+        void ChangeMap();
+        std::string AddLevelStr(bool add);
         static void OpenMenu();
         static void PauseGame();
         std::vector<GameObject*> m_gameObjects;
         std::vector<GameObject*> m_guiObjects;
-
         Map* m_LevelMap;
+        int MapCount = 2;
 
 
     protected: 

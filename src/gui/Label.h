@@ -46,7 +46,7 @@ class Label : public GameObject {
     }
 
     virtual void Clean() override {
-
+        
     }
     protected:
         SDL_Rect position;
