@@ -29,8 +29,12 @@ class Label : public GameObject {
 
     }
 
-
+    void SetTextColor(SDL_Color color){
+        textColor = color;
+    }
     void SetLabelText(std::string text, std::string font){
+        labelText = text;
+        labelFont = font;
         SDL_Surface* surf = TTF_RenderText_Blended(TextureManager::GetInstance()->GetFont(font),labelText.c_str(),textColor);
         labelTexture = SDL_CreateTextureFromSurface(Engine::GetInstance()->GetRenderer(),surf);
         SDL_FreeSurface(surf);
@@ -54,6 +58,7 @@ class Label : public GameObject {
         std::string labelFont;
         SDL_Color textColor;
         SDL_Texture* labelTexture;
+        
 
 };
 

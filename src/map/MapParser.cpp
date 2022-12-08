@@ -24,6 +24,15 @@ void MapParser::Clean(){
     m_mapDict.clear();
 
 }
+
+bool MapParser::CanEnterMap(std::string source){
+    TiXmlDocument xml;
+    xml.LoadFile(source);
+    if (xml.Error()){
+        return false;
+    }
+    return true;
+}
 bool MapParser::Parse(std::string id, std::string source){
     std::cout << "Parsing " << id << " from " << source << " ...\n";
     TiXmlDocument xml;

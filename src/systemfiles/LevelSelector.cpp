@@ -1,6 +1,6 @@
 #include "LevelSelector.h"
 LevelSelector* LevelSelector::s_Instance = nullptr;
-
+Label* LevelSelector::status = nullptr;
 
 bool LevelSelector::Init(std::string mapName){
     // draw GUI
@@ -10,16 +10,18 @@ bool LevelSelector::Init(std::string mapName){
     for (int i=1; i<=10; i++){
         for (int j=1; j<=5; j++){
              ss << count;
-             Button* button = new Button((50*j) + 10, (50*i) + 10, 50, 50, clickCallbackHandler, {"button","buttonhover","button"}, ss.str());
+             Button* button = new Button((50*j) + 20, (50*i) + 20, 50, 50, clickCallbackHandler, {"button","buttonhover","button"}, ss.str());
              ss.str("");
              ss.clear();
              m_guiObjects.push_back(button);
              count++;
         }
     }
-
-    Button* confirm = new Button(25,600, 100, 100, clickCallbackHandler2, {"button","buttonhover","button"}, "Confirm");
+    SDL_Color color = {255,255,255,255};
+    status = new Label(125,570,350,100, "Selected level: N/A", "Comic Sans MS", color);
+    Button* confirm = new Button(150,590, 75,50, clickCallbackHandler2, {"button","buttonhover","button"}, "Confirm");
     m_guiObjects.push_back(confirm);
+    m_guiObjects.push_back(status);
 }
 
 void LevelSelector::Render(){
@@ -46,7 +48,16 @@ void LevelSelector::clickCallbackHandler(std::string mapName){
 
     conc += mapName;
     std::cout << "wow, " << conc << "\n";
-    Play::GetInstance()->setMapName(conc);
+    if (MapParser::GetInstance()->CanEnterMap("assets/maps/" + conc + ".tmx")){
+        Play::GetInstance()->setMapName(conc);
+        SDL_Color color = {255,255,255,255};
+        status->SetTextColor(color);
+        status->SetLabelText("Selected level: " + mapName,"Comic Sans MS");
+    } else {
+        SDL_Color color = {229, 11, 11, 204};
+        status->SetTextColor(color);
+        status->SetLabelText("Error: You are not allowed to enter level (doesn't exist yet or you didn't beat levels before)", "Comic Sans MS");
+    }
 
 
 }

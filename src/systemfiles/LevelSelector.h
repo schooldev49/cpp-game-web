@@ -20,6 +20,7 @@ class LevelSelector : public GameState {
         static void clickCallbackHandler(std::string mapName);
         static void clickCallbackHandler2(std::string mapName);
         std::vector<GameObject*> m_guiObjects;
+        static Label* status;
     protected:
         static LevelSelector* s_Instance;
 };
