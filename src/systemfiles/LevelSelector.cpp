@@ -18,7 +18,7 @@ bool LevelSelector::Init(std::string mapName){
         }
     }
     SDL_Color color = {255,255,255,255};
-    status = new Label(125,570,350,100, "Selected level: N/A", "Comic Sans MS", color);
+    status = new Label(125,570,350,100, "Selected level: 1", "Comic Sans MS", color);
     Button* confirm = new Button(150,590, 75,50, clickCallbackHandler2, {"button","buttonhover","button"}, "Confirm");
     m_guiObjects.push_back(confirm);
     m_guiObjects.push_back(status);
