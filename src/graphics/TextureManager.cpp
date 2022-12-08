@@ -39,7 +39,7 @@ void TextureManager::QueryTexture(std::string id, int* out_w, int* out_h){
 void TextureManager::Draw(std::string id, int x, int y, int width, int height, float scaleX, float scaleY, float scrollRatio, SDL_RendererFlip flip){
     SDL_Rect srcRect = {0,0,width,height};
     Vector2D cam = Viewport::GetInstance()->GetPosition()*scrollRatio;
-    SDL_Rect dstRect = {x - cam.X,y - cam.Y,width*scaleX,height*scaleY};
+    SDL_Rect dstRect = {static_cast<int>(x - cam.X),static_cast<int>(y - cam.Y),static_cast<int>(width*scaleX),static_cast<int>(height*scaleY)};
     
     SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, 0, nullptr, flip);
  
@@ -51,7 +51,7 @@ void TextureManager::DrawTile(std::string tid, int tSize, int x, int y, int row,
 
     Vector2D cam = Viewport::GetInstance()->GetPosition();
 
-    SDL_Rect dstRect = {x - cam.X,y - cam.Y,tSize, tSize};
+    SDL_Rect dstRect = {static_cast<int>(x - cam.X),static_cast<int>(y - cam.Y),tSize, tSize};
 
     SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(),m_TextureMap[tid],&srcRect,&dstRect,0,0,flip);
 
@@ -60,7 +60,7 @@ void TextureManager::DrawTile(std::string tid, int tSize, int x, int y, int row,
 void TextureManager::DrawFrame(std::string id, int x, int y, int width, int height, int row, int frame, SDL_RendererFlip flip){
     SDL_Rect srcRect = {width*frame, 0 ,width,height};
     Vector2D cam = Viewport::GetInstance()->GetPosition();
-    SDL_Rect dstRect = {x - cam.X,y - cam.Y,width,height};
+    SDL_Rect dstRect = {static_cast<int>(x - cam.X),static_cast<int>(y - cam.Y),width,height};
     SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, 0, 0, flip);
 
 

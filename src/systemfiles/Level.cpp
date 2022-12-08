@@ -139,6 +139,7 @@ std::string Level::AddLevelStr(bool add){
 
         return rval;
     }
+    return "level1";
 }
 void Level::ChangeMap(){
      std::string mapID = Play::GetInstance()->mapName;

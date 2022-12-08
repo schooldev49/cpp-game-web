@@ -33,7 +33,7 @@ class Collision {
 
         void Draw(){
             Vector2D cam = Viewport::GetInstance()->GetPosition();
-            SDL_Rect box = {m_Box.x - cam.X,m_Box.y - cam.Y, m_Box.w,m_Box.h};
+            SDL_Rect box = {static_cast<int>(m_Box.x - cam.X),static_cast<int>(m_Box.y - cam.Y), m_Box.w,m_Box.h};
             SDL_SetRenderDrawColor( Engine::GetInstance()->GetRenderer(), 239, 0, 0, 0.8 );
             SDL_RenderDrawRect(Engine::GetInstance()->GetRenderer(),&box);
         }

@@ -9,6 +9,8 @@ bool Play::Init(std::string mapName){
    TextureManager::GetInstance()->ParseTexture("assets/textures.tml");
 
    Engine::GetInstance()->getState()->Init();
+
+   return true;
    // m_LevelMap = MapParser::GetInstance()->Load("assets/maps/map.tmx");
 
 }

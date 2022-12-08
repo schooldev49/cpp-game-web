@@ -1,1 +1,2 @@
-emcc src/main.cpp -s WASM=1 -s USE_SDL=2 -s USE_SDL_IMAGE=3 -s SDL2_IMAGE_FORMATS='["png","jpg"]' --preload-file res -o test/index.js
+emcc src/main.cpp -s WASM=1 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s USE_SDL_TTF=2 --preload-file assets -o test/index.js
+sleep 5s
