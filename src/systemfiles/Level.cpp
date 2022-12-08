@@ -3,8 +3,8 @@ Level* Level::s_Instance = nullptr;
 bool Level::Init(std::string mapN){
 
      std::string mapID = Play::GetInstance()->mapName;
-      
-        if (!MapParser::GetInstance()->Load(mapID)){
+      std::cout << mapID << " is loading...\n";
+        if (!MapParser::GetInstance()->Load(mapID, "assets/maps/" + mapID + ".tmx")){
             std::cout << "Unable to load map!";
         }
         m_LevelMap = MapParser::GetInstance()->GetMaps(mapID);
@@ -79,27 +79,34 @@ void Level::Events(){
     }
 }
 
+
 bool Level::Exit(){
-    m_LevelMap->Clean();
-    delete m_LevelMap;
-    for (auto gameobj : m_gameObjects){
-        gameobj->Clean();
-        delete gameobj;
-    }   
-    for (auto guiobj : m_guiObjects){
-        guiobj->Clean();
-        delete guiobj;
-    } 
+    if (m_LevelMap){
+        m_LevelMap->Clean();
+    }
+    for (auto i : m_gameObjects){
+        i->Clean();
+        delete i;
+    }
+
+    for (auto i : m_guiObjects){
+        i->Clean();
+        delete i;
+    }
     m_gameObjects.clear();
+    m_gameObjects.shrink_to_fit();
     m_guiObjects.clear();
+    m_guiObjects.shrink_to_fit();
+
+    TextureManager::GetInstance()->ParseTexture("assets/textures.tml");
     return true;
+
 }
 
 void Level::OpenMenu(){
     Level::GetInstance()->Exit();
     std::cout << "Exited!\n";
     Engine::GetInstance()->changeState(Menu::GetInstance());
-    TextureManager::GetInstance()->ParseTexture("assets/textures.tml");
 
     Menu::GetInstance()->Init();
 }

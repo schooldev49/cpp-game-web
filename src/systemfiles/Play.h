@@ -18,6 +18,7 @@
 #include "../map/MapChunk.h"
 #include "../physics/CollisionHandler.h"
 #include "Level.h"
+#include "LevelSelector.h"
 #include "../graphics/TextureManager.h"
 #include "../systemfiles/ObjectR.h"
 class Play : public GameState {

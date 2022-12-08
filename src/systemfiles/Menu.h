@@ -16,11 +16,13 @@ class Menu : public GameState {
            return s_Instance = (s_Instance != nullptr) ? s_Instance : new Menu(); 
         }
 
-    protected:
-        static void startGame();
+        static void startGame(std::string tx = "");
         static void settings();
-        static void levelSelector();
+        static void levelSelector(std::string ti = "");
         static void quit();
+
+    protected:
+      
         std::vector<GameObject*> m_guiObjects;
         static Menu* s_Instance;
 

@@ -108,4 +108,5 @@ void MainChar::Update(float dt){
 }
 
 void MainChar::Clean(){
+   TextureManager::GetInstance()->Drop(m_TextureID);
 }
