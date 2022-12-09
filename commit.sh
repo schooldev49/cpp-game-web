@@ -13,19 +13,24 @@ function git_sparse_checkout {
     # list of files or directories to be downloaded.
     
     cd ..
+    [ ! -d "cpp-game-web" ] && mkdir cpp-game-web
     cd cpp-game-web
+    git init
+
         git config core.sparseCheckout true
         local path="" # local scope
         for path in $* ;do
             echo "${path}" >> .git/info/sparse-checkout
         done
+        git remote add origin ${url}
+    
         git fetch --depth=1 origin ${tag}
         git checkout ${tag}
 
     
 }
 
- url=http://github.com/schooldev49
+ url=https://github.com/schooldev49/Cpp-game
   dir=$(pwd)/sources
   prj=bash-scripts
   tag=main
