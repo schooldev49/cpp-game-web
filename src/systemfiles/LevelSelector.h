@@ -8,6 +8,7 @@
 
 class LevelSelector : public GameState {
     public:
+        LevelSelector(){};
         virtual bool Init(std::string mapName="level1");
         virtual bool Exit();
 

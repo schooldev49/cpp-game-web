@@ -116,12 +116,17 @@ std::string Level::AddLevelStr(bool add){
         std::cout << "\n" << substrD << "\n";
         int id = std::stoi(substrD);
         std::cout << id << "hi \n";
+        if (add){ // currently only 2 MAP (trol)
+            bool canEnter = MapParser::GetInstance()->CanEnterMap("assets/maps/" + std::to_string(id+1) + ".tmx");
+            if (canEnter){
+                id += 1;
+                std::cout << id << "hi \n";
 
-        if (id < MapCount && add){ // currently only 2 MAP (trol)
-            id += 1;
-            std::cout << id << "hi \n";
+            } else {
+                id = 1;
+            }
 
-        } 
+        }
 
         std::string newLevelName = "level"; 
 
@@ -146,6 +151,10 @@ void Level::ChangeMap(){
      if (mapID != ""){
         if (m_LevelMap){
             m_LevelMap->Clean();
+        }
+        for (auto i : m_guiObjects){
+            i->Clean();
+            delete i;
         }
         if (!MapParser::GetInstance()->Load(mapID, "assets/maps/" + mapID + ".tmx")){
             std::cout << "Unable to load map!";

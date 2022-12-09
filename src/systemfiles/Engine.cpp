@@ -26,8 +26,9 @@ Play* play = nullptr;
         void Events();
 */
 bool Engine::Init(){
-    SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI);
-    m_Window = SDL_CreateWindow("Jumpy game",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,WIDTH,HEIGHT,window_flags);
+    // SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI
+    SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI);
+    m_Window = SDL_CreateWindow("Jumpy game",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,WIDTH,HEIGHT,window_flags);
     if (m_Window == nullptr){
         std::cout << "unable to create window. error: " << SDL_GetError() << "\n"; 
         return false;

@@ -59,7 +59,7 @@ void Menu::settings(){
 
 void Menu::levelSelector(std::string st){
     Engine::GetInstance()->changeState(LevelSelector::GetInstance());
-    LevelSelector::GetInstance()->Init();
+    LevelSelector::GetInstance()->Init(st);
 }
 
 void Menu::quit(){

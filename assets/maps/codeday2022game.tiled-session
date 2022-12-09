@@ -27,8 +27,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 246,
-                "y": 359
+                "x": 3266,
+                "y": 318
             }
         },
         "level1.tmx#Tileset": {
@@ -53,11 +53,11 @@
             "scaleInDock": 1
         },
         "level2.tmx": {
-            "scale": 1,
-            "selectedLayer": 0,
+            "scale": 0.75,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 211,
-                "y": 441
+                "x": 2285.333333333333,
+                "y": 560
             }
         },
         "level2.tmx#Tileset": {

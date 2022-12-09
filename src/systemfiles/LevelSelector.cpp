@@ -1,15 +1,19 @@
 #include "LevelSelector.h"
+#include <iostream>
 LevelSelector* LevelSelector::s_Instance = nullptr;
 Label* LevelSelector::status = nullptr;
 
 bool LevelSelector::Init(std::string mapName){
     // draw GUI
     // each row has 5 levels, and there are 10 columns
+    std::cout << "Intiialized level selector...\n";
     int count = 1;
+    if (status == nullptr){
     std::stringstream ss;
     for (int i=1; i<=10; i++){
         for (int j=1; j<=5; j++){
              ss << count;
+             std::cout << "we are doing " << count << "\n";
              Button* button = new Button((50*j) + 20, (50*i) + 20, 50, 50, clickCallbackHandler, {"button","buttonhover","button"}, ss.str());
              ss.str("");
              ss.clear();
@@ -17,16 +21,21 @@ bool LevelSelector::Init(std::string mapName){
              count++;
         }
     }
+    std::cout << "Done!\n";
     SDL_Color color = {255,255,255,255};
     status = new Label(125,570,350,100, "Selected level: 1", "Comic Sans MS", color);
+    std::cout << "made label!\n";
     Button* confirm = new Button(150,590, 75,50, clickCallbackHandler2, {"button","buttonhover","button"}, "Confirm");
+    std::cout << "Made button!\n";
     m_guiObjects.push_back(confirm);
     m_guiObjects.push_back(status);
+    std::cout << "Pushed!\n";
+    }
+    return true;
 }
 
 void LevelSelector::Render(){
     // call GUI rendering functions
-    TextureManager::GetInstance()->Draw("bg",0,0,2100,1050,1,1,0.05);
     for (auto i : m_guiObjects){
         i->Draw();
     }
@@ -56,7 +65,7 @@ void LevelSelector::clickCallbackHandler(std::string mapName){
     } else {
         SDL_Color color = {229, 11, 11, 204};
         status->SetTextColor(color);
-        status->SetLabelText("Error: You are not allowed to enter level (doesn't exist yet or you didn't beat levels before)", "Comic Sans MS");
+        status->SetLabelText("Error: You are not allowed to enter level (doesn't exist yet, wait for me to add)", "Comic Sans MS");
     }
 
 
@@ -79,6 +88,6 @@ bool LevelSelector::Exit(){
         i->Clean();
         delete i;
     }*/ // DONT DELETE SO MUCH
-
+\
     return true;
 }

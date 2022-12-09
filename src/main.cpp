@@ -1,3 +1,5 @@
+#define SDL_MAIN_HANDLED 1
+
 #include <iostream>
 #include <cstdio>
 #include <SDL2/SDL.h>
@@ -5,8 +7,30 @@
 #include "systemfiles/Engine.h"
 #include "graphics/TextureManager.h"
 #include "time/Timer.h"
+Engine* eng = Engine::GetInstance();
 
-int main(int argc, char* argv[]){
+
+#ifdef __EMSCRIPTEN__
+    #include <emscripten.h>
+
+void loop(){
+    /*if (eng->isRunning() == false){
+        //eng->Clean();
+        //emscripten_cancel_main_loop();
+       // return;
+    }*/
+    eng->Events(); 
+    eng->Update();
+    eng->Render();
+    Timer::GetInstance()->Tick();
+    SDL_Delay(0);
+   
+}
+#endif
+
+
+extern "C" {
+int main(void){
     
     
     if (SDL_Init(SDL_INIT_VIDEO) == 0 && IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) != 0){
@@ -15,19 +39,33 @@ int main(int argc, char* argv[]){
         std::cout << "there is an error: " << SDL_GetError() << "\n";
         return EXIT_FAILURE;
     };
-
     static Engine* engine = Engine::GetInstance();
     static Timer* timer = Timer::GetInstance();
     engine->Init();
+    engine->setRunning(true);
     SDL_Delay(0);
-    while (engine->isRunning()){
+    /*while (engine->isRunning()){
         engine->Events(); 
         engine->Update();
         engine->Render();
         timer->Tick();
         SDL_Delay(0);
-    }
-    engine->Clean();
+    }*/
+    #ifdef __EMSCRIPTEN__
+        SDL_Delay(0);
+        emscripten_set_main_loop(loop,0,1);
+    #endif 
+    #ifndef __EMSCRIPTEN__
+        while (engine->isRunning()){
+            engine->Events(); 
+            engine->Update();
+            engine->Render();
+            timer->Tick();
+            SDL_Delay(0);
+        }
+        engine->Clean();
+
+    #endif
     return 0;
    /* SDL_Window *window = SDL_CreateWindow("Game",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,WIDTH,HEIGHT,SDL_WINDOW_ALLOW_HIGHDPI);
     if (window == NULL){
@@ -79,5 +117,5 @@ int main(int argc, char* argv[]){
 
     return EXIT_SUCCESS;*/
 }
-
+}
 // emscripten_set_main_loop

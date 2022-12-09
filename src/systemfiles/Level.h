@@ -24,7 +24,6 @@ class Level : public GameState {
         std::vector<GameObject*> m_gameObjects;
         std::vector<GameObject*> m_guiObjects;
         Map* m_LevelMap;
-        int MapCount = 2;
 
 
     protected: 
